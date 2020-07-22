@@ -53,3 +53,25 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Authentication Solution
+gem 'devise'
+
+# Soft delete
+gem 'acts_as_paranoid', '~> 0.6.3'
+
+# ActiveRecord: Bulk insert data
+gem 'activerecord-import', '~> 1.0.5'
+
+# Serializer for active record
+gem 'active_model_serializers'
+
+# Rack middleware
+gem 'rack-cors'
+
+# Environment Variables
+gem 'figaro'
+
+# Necessary for ActiveStorage
+gem 'image_processing'
+gem 'mini_magick'
