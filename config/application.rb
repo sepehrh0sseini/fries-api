@@ -15,5 +15,22 @@ module FriesApi
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+    ActiveModelSerializers.config.adapter = :json # Default: `:attributes`
+
+    config.adapter = :json
+    config.api_only = true
+    config.debug_exception_response_format = :api
+
+    # CORS Middleware
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
+
+    config.active_storage.replace_on_assign_to_many = false
+
+    Rails.application.routes.default_url_options[:host] = 'http://localhost:3030'
   end
 end
