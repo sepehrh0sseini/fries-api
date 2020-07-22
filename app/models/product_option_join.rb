@@ -1,0 +1,2 @@
+class ProductOptionJoin < ApplicationRecord
+end
