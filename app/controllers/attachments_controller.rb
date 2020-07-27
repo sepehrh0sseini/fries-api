@@ -17,7 +17,6 @@ class AttachmentsController < ApplicationController
 
     redirect_to @file, status: 302
   rescue StandardError => e
-    pp '=================', e
     render status: :not_found, json: { message: I18n.t(:attachment_not_found) }
   end
 

@@ -20,7 +20,6 @@ module AttachmentsHelper
   def get_attachment_url(attachment, options = {})
     is_one_attachment = attachment.respond_to?(:attachment)
     is_many_attachment = attachment.respond_to?(:attachments)
-    pp '==================', is_one_attachment
 
     raise StandardError unless attachment.attached?
 
