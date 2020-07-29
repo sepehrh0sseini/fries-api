@@ -10,10 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_11_124829) do
+ActiveRecord::Schema.define(version: 2020_07_19_162505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "cart_items", force: :cascade do |t|
     t.bigint "products_id"
@@ -25,6 +46,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_124829) do
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.bigint "product_options_id"
+    t.integer "products_count", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_options_id"], name: "index_categories_on_product_options_id"
@@ -56,12 +78,12 @@ ActiveRecord::Schema.define(version: 2020_07_11_124829) do
   end
 
   create_table "product_option_joins", force: :cascade do |t|
-    t.bigint "products_id"
-    t.bigint "product_options_id"
+    t.bigint "product_id"
+    t.bigint "product_option_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["product_options_id"], name: "index_product_option_joins_on_product_options_id"
-    t.index ["products_id"], name: "index_product_option_joins_on_products_id"
+    t.index ["product_id"], name: "index_product_option_joins_on_product_id"
+    t.index ["product_option_id"], name: "index_product_option_joins_on_product_option_id"
   end
 
   create_table "product_option_selects", force: :cascade do |t|
@@ -110,6 +132,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_124829) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "product_option_selects", "product_options"
   add_foreign_key "product_options", "product_options", column: "parent_id"
 end
